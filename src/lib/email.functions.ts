@@ -49,9 +49,9 @@ export const sendContactEmail = createServerFn({ method: "POST" })
         name: data.name,
         email: data.email,
         phone: data.phone ?? null,
+        subject: "Website contact form",
         message: data.message,
         status: "pending",
-        source: "website",
       });
     } catch (e) {
       console.error("Enquiry save error", e);
