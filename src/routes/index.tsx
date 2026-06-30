@@ -109,7 +109,8 @@ function Home() {
           initial={{ scale: 1.15 }} animate={{ scale: 1 }} transition={{ duration: 6, ease: "easeOut" }}
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/35 via-charcoal/20 to-charcoal/55" />
+        <div className="absolute inset-0 bg-gradient-to-b from-charcoal/70 via-charcoal/55 to-charcoal/80" />
+        <div className="absolute inset-0 bg-charcoal/25" />
         <div className="container-luxe relative z-10 text-center">
           <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.8 }}
             className="eyebrow text-gold-soft">Premium Hospitality · Mansa, Punjab</motion.p>
