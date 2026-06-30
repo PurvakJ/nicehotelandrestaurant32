@@ -134,6 +134,15 @@ export const sendVenueEnquiry = createServerFn({ method: "POST" })
     } catch (e) {
       console.error("Venue enquiry save error", e);
     }
+    try {
+      const { notify } = await import("./notifications.server");
+      await notify({
+        type: "venue",
+        title: `New venue booking — ${data.name}`,
+        body: `${data.eventType} · ${data.eventDate} · ${data.guests} guests${data.venue ? ` · ${data.venue}` : ""}`,
+        link: "/admin/enquiries",
+      });
+    } catch (e) { console.error("notify error", e); }
 
     // 2) Send notification emails (best-effort — failure must not break the flow).
     try {
