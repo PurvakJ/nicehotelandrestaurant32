@@ -132,7 +132,7 @@ export const venues = [
     capacity: "Coming Soon",
     size: "—",
     floor: "Ground Floor",
-    image: dining2Img.url,
+    image: dining2Img,
     comingSoon: true,
     description: "Beautiful outdoor venue with scenic views — Opening Soon!",
     amenities: ["Outdoor Setting", "Scenic Views", "Garden Lighting", "Open Air", "Floral Decor", "Catering"],
