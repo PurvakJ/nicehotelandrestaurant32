@@ -50,6 +50,8 @@ export const Route = createFileRoute("/menu")({
 });
 
 function Menu() {
+  const { dbMenu } = Route.useLoaderData();
+  const categories: MenuCategory[] = dbMenu.length ? (dbMenu as MenuCategory[]) : (menuData as MenuCategory[]);
   // Page 0 = cover, pages 1..N = categories, last page = info/back-cover
   const totalPages = categories.length + 2;
   const [page, setPage] = useState(0);
