@@ -234,7 +234,8 @@ function Home() {
         <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
           {curatedPrivileges.map((p, i) => (
             <Reveal key={p.title} delay={i * 0.1}>
-              <div className="group flex h-full flex-col overflow-hidden rounded-2xl bg-card shadow-card transition hover:-translate-y-2 hover:shadow-luxe">
+              <TiltCard className="group h-full">
+              <div className="group flex h-full flex-col overflow-hidden rounded-2xl bg-card shadow-card transition hover:shadow-luxe">
                 <div className="h-48 overflow-hidden">
                   <img src={p.image} alt={p.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" />
                 </div>
@@ -247,6 +248,7 @@ function Home() {
                   </button>
                 </div>
               </div>
+              </TiltCard>
             </Reveal>
           ))}
         </div>
