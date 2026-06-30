@@ -6,6 +6,7 @@ import menuData from "@/data/menu.json";
 import { site, type MenuCategory } from "@/data/content";
 import { CtaBand } from "@/components/site/ui";
 import { breadcrumbLd } from "@/lib/seo";
+import { getMenu } from "@/lib/public.functions";
 
 const categories = menuData as MenuCategory[];
 
@@ -17,6 +18,10 @@ function isNonVeg(name: string, cat: string) {
 }
 
 export const Route = createFileRoute("/menu")({
+  loader: async () => {
+    try { return { dbMenu: await getMenu() }; }
+    catch { return { dbMenu: [] as MenuCategory[] }; }
+  },
   head: () => ({
     meta: [
       { title: "Our Menu — Nice Hotel And Restaurant, Mansa" },
@@ -45,6 +50,8 @@ export const Route = createFileRoute("/menu")({
 });
 
 function Menu() {
+  const { dbMenu } = Route.useLoaderData();
+  const categories: MenuCategory[] = dbMenu.length ? (dbMenu as MenuCategory[]) : (menuData as MenuCategory[]);
   // Page 0 = cover, pages 1..N = categories, last page = info/back-cover
   const totalPages = categories.length + 2;
   const [page, setPage] = useState(0);
