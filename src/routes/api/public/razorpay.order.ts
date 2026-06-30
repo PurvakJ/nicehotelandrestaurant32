@@ -11,11 +11,12 @@ export const Route = createFileRoute("/api/public/razorpay/order")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const keyId = process.env.RAZORPAY_KEY_ID;
-        const keySecret = process.env.RAZORPAY_KEY_SECRET;
-        if (!keyId || !keySecret) {
+        const { razorpayCreds } = await import("@/lib/razorpay.server");
+        const creds = razorpayCreds();
+        if (!creds) {
           return Response.json({ error: "Payment gateway not configured" }, { status: 500 });
         }
+        const { keyId, keySecret } = creds;
         let body: unknown;
         try { body = await request.json(); } catch { return Response.json({ error: "Invalid body" }, { status: 400 }); }
         const parsed = schema.safeParse(body);
