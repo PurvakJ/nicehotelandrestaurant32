@@ -201,7 +201,7 @@ function Home() {
             </div>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link to="/venue"><LuxeButton><span>Explore Venues</span></LuxeButton></Link>
-              <button onClick={() => open()}><LuxeButton variant="outline"><span className="text-charcoal">Inquire Now</span></LuxeButton></button>
+              <LuxeButton variant="outline" onClick={() => open()}><span className="text-charcoal">Inquire Now</span></LuxeButton>
             </div>
           </Reveal>
         </div>
@@ -221,7 +221,7 @@ function Home() {
               Let us host your most cherished moments with impeccable service and elegant spaces.
             </p>
             <div className="mt-9 flex justify-center">
-              <button onClick={() => open()}><LuxeButton>Plan Your Event</LuxeButton></button>
+              <LuxeButton onClick={() => open()}>Plan Your Event</LuxeButton>
             </div>
           </Reveal>
         </div>
