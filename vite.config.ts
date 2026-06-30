@@ -12,4 +12,16 @@ export default defineConfig({
     // nitro/vite builds from this
     server: { entry: "server" },
   },
+  nitro: {
+    // Vercel deployment target. Lovable preview/builds still force Cloudflare internally.
+    preset: "vercel",
+    // Bundle server dependencies instead of running nf3/@vercel/nft tracing.
+    // This removes the nodeFileTrace compatibility failure on Vercel Node 22.
+    noExternals: true,
+    vercel: {
+      functions: {
+        runtime: "nodejs22.x",
+      },
+    },
+  } as any,
 });
