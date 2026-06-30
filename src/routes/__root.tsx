@@ -4,6 +4,7 @@ import {
   Link,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
@@ -145,16 +146,18 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const isAdmin = pathname.startsWith("/admin") || pathname === "/auth" || pathname === "/reset-password";
 
   return (
     <QueryClientProvider client={queryClient}>
       <BookingProvider>
-        <Header />
+        {!isAdmin && <Header />}
         <main>
           {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
           <Outlet />
         </main>
-        <Footer />
+        {!isAdmin && <Footer />}
         <Toaster position="top-center" />
       </BookingProvider>
     </QueryClientProvider>

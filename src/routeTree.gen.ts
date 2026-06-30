@@ -12,10 +12,25 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as VenueRouteImport } from './routes/venue'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as RoomsRouteImport } from './routes/rooms'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as MenuRouteImport } from './routes/menu'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
+import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authenticated/admin.index'
+import { Route as AuthenticatedAdminStaffRouteImport } from './routes/_authenticated/admin.staff'
+import { Route as AuthenticatedAdminSettingsRouteImport } from './routes/_authenticated/admin.settings'
+import { Route as AuthenticatedAdminRoomsRouteImport } from './routes/_authenticated/admin.rooms'
+import { Route as AuthenticatedAdminReviewsRouteImport } from './routes/_authenticated/admin.reviews'
+import { Route as AuthenticatedAdminOffersRouteImport } from './routes/_authenticated/admin.offers'
+import { Route as AuthenticatedAdminMenuRouteImport } from './routes/_authenticated/admin.menu'
+import { Route as AuthenticatedAdminGalleryRouteImport } from './routes/_authenticated/admin.gallery'
+import { Route as AuthenticatedAdminEnquiriesRouteImport } from './routes/_authenticated/admin.enquiries'
+import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
+import { Route as AuthenticatedAdminAuditRouteImport } from './routes/_authenticated/admin.audit'
 
 const VenueRoute = VenueRouteImport.update({
   id: '/venue',
@@ -32,6 +47,11 @@ const RoomsRoute = RoomsRouteImport.update({
   path: '/rooms',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MenuRoute = MenuRouteImport.update({
   id: '/menu',
   path: '/menu',
@@ -42,9 +62,18 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -52,63 +81,223 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedAdminIndexRoute = AuthenticatedAdminIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminStaffRoute = AuthenticatedAdminStaffRouteImport.update({
+  id: '/staff',
+  path: '/staff',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminSettingsRoute =
+  AuthenticatedAdminSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminRoomsRoute = AuthenticatedAdminRoomsRouteImport.update({
+  id: '/rooms',
+  path: '/rooms',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminReviewsRoute =
+  AuthenticatedAdminReviewsRouteImport.update({
+    id: '/reviews',
+    path: '/reviews',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminOffersRoute =
+  AuthenticatedAdminOffersRouteImport.update({
+    id: '/offers',
+    path: '/offers',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminMenuRoute = AuthenticatedAdminMenuRouteImport.update({
+  id: '/menu',
+  path: '/menu',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
+const AuthenticatedAdminGalleryRoute =
+  AuthenticatedAdminGalleryRouteImport.update({
+    id: '/gallery',
+    path: '/gallery',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminEnquiriesRoute =
+  AuthenticatedAdminEnquiriesRouteImport.update({
+    id: '/enquiries',
+    path: '/enquiries',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminBookingsRoute =
+  AuthenticatedAdminBookingsRouteImport.update({
+    id: '/bookings',
+    path: '/bookings',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
+const AuthenticatedAdminAuditRoute = AuthenticatedAdminAuditRouteImport.update({
+  id: '/audit',
+  path: '/audit',
+  getParentRoute: () => AuthenticatedAdminRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
   '/services': typeof ServicesRoute
   '/venue': typeof VenueRoute
+  '/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
+  '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
+  '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
+  '/admin/menu': typeof AuthenticatedAdminMenuRoute
+  '/admin/offers': typeof AuthenticatedAdminOffersRoute
+  '/admin/reviews': typeof AuthenticatedAdminReviewsRoute
+  '/admin/rooms': typeof AuthenticatedAdminRoomsRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/staff': typeof AuthenticatedAdminStaffRoute
+  '/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
   '/services': typeof ServicesRoute
   '/venue': typeof VenueRoute
+  '/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
+  '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
+  '/admin/gallery': typeof AuthenticatedAdminGalleryRoute
+  '/admin/menu': typeof AuthenticatedAdminMenuRoute
+  '/admin/offers': typeof AuthenticatedAdminOffersRoute
+  '/admin/reviews': typeof AuthenticatedAdminReviewsRoute
+  '/admin/rooms': typeof AuthenticatedAdminRoomsRoute
+  '/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/admin/staff': typeof AuthenticatedAdminStaffRoute
+  '/admin': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/contact': typeof ContactRoute
   '/menu': typeof MenuRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/rooms': typeof RoomsRoute
   '/services': typeof ServicesRoute
   '/venue': typeof VenueRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
+  '/_authenticated/admin/audit': typeof AuthenticatedAdminAuditRoute
+  '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRoute
+  '/_authenticated/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
+  '/_authenticated/admin/gallery': typeof AuthenticatedAdminGalleryRoute
+  '/_authenticated/admin/menu': typeof AuthenticatedAdminMenuRoute
+  '/_authenticated/admin/offers': typeof AuthenticatedAdminOffersRoute
+  '/_authenticated/admin/reviews': typeof AuthenticatedAdminReviewsRoute
+  '/_authenticated/admin/rooms': typeof AuthenticatedAdminRoomsRoute
+  '/_authenticated/admin/settings': typeof AuthenticatedAdminSettingsRoute
+  '/_authenticated/admin/staff': typeof AuthenticatedAdminStaffRoute
+  '/_authenticated/admin/': typeof AuthenticatedAdminIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/auth'
     | '/contact'
     | '/menu'
+    | '/reset-password'
     | '/rooms'
     | '/services'
     | '/venue'
+    | '/admin'
+    | '/admin/audit'
+    | '/admin/bookings'
+    | '/admin/enquiries'
+    | '/admin/gallery'
+    | '/admin/menu'
+    | '/admin/offers'
+    | '/admin/reviews'
+    | '/admin/rooms'
+    | '/admin/settings'
+    | '/admin/staff'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/contact' | '/menu' | '/rooms' | '/services' | '/venue'
+  to:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/contact'
+    | '/menu'
+    | '/reset-password'
+    | '/rooms'
+    | '/services'
+    | '/venue'
+    | '/admin/audit'
+    | '/admin/bookings'
+    | '/admin/enquiries'
+    | '/admin/gallery'
+    | '/admin/menu'
+    | '/admin/offers'
+    | '/admin/reviews'
+    | '/admin/rooms'
+    | '/admin/settings'
+    | '/admin/staff'
+    | '/admin'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/about'
+    | '/auth'
     | '/contact'
     | '/menu'
+    | '/reset-password'
     | '/rooms'
     | '/services'
     | '/venue'
+    | '/_authenticated/admin'
+    | '/_authenticated/admin/audit'
+    | '/_authenticated/admin/bookings'
+    | '/_authenticated/admin/enquiries'
+    | '/_authenticated/admin/gallery'
+    | '/_authenticated/admin/menu'
+    | '/_authenticated/admin/offers'
+    | '/_authenticated/admin/reviews'
+    | '/_authenticated/admin/rooms'
+    | '/_authenticated/admin/settings'
+    | '/_authenticated/admin/staff'
+    | '/_authenticated/admin/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
   ContactRoute: typeof ContactRoute
   MenuRoute: typeof MenuRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   RoomsRoute: typeof RoomsRoute
   ServicesRoute: typeof ServicesRoute
   VenueRoute: typeof VenueRoute
@@ -137,6 +326,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RoomsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/menu': {
       id: '/menu'
       path: '/menu'
@@ -151,11 +347,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -165,14 +375,143 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/admin/': {
+      id: '/_authenticated/admin/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AuthenticatedAdminIndexRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/staff': {
+      id: '/_authenticated/admin/staff'
+      path: '/staff'
+      fullPath: '/admin/staff'
+      preLoaderRoute: typeof AuthenticatedAdminStaffRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/settings': {
+      id: '/_authenticated/admin/settings'
+      path: '/settings'
+      fullPath: '/admin/settings'
+      preLoaderRoute: typeof AuthenticatedAdminSettingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/rooms': {
+      id: '/_authenticated/admin/rooms'
+      path: '/rooms'
+      fullPath: '/admin/rooms'
+      preLoaderRoute: typeof AuthenticatedAdminRoomsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/reviews': {
+      id: '/_authenticated/admin/reviews'
+      path: '/reviews'
+      fullPath: '/admin/reviews'
+      preLoaderRoute: typeof AuthenticatedAdminReviewsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/offers': {
+      id: '/_authenticated/admin/offers'
+      path: '/offers'
+      fullPath: '/admin/offers'
+      preLoaderRoute: typeof AuthenticatedAdminOffersRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/menu': {
+      id: '/_authenticated/admin/menu'
+      path: '/menu'
+      fullPath: '/admin/menu'
+      preLoaderRoute: typeof AuthenticatedAdminMenuRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/gallery': {
+      id: '/_authenticated/admin/gallery'
+      path: '/gallery'
+      fullPath: '/admin/gallery'
+      preLoaderRoute: typeof AuthenticatedAdminGalleryRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/enquiries': {
+      id: '/_authenticated/admin/enquiries'
+      path: '/enquiries'
+      fullPath: '/admin/enquiries'
+      preLoaderRoute: typeof AuthenticatedAdminEnquiriesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/bookings': {
+      id: '/_authenticated/admin/bookings'
+      path: '/bookings'
+      fullPath: '/admin/bookings'
+      preLoaderRoute: typeof AuthenticatedAdminBookingsRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
+    '/_authenticated/admin/audit': {
+      id: '/_authenticated/admin/audit'
+      path: '/audit'
+      fullPath: '/admin/audit'
+      preLoaderRoute: typeof AuthenticatedAdminAuditRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
   }
 }
 
+interface AuthenticatedAdminRouteChildren {
+  AuthenticatedAdminAuditRoute: typeof AuthenticatedAdminAuditRoute
+  AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRoute
+  AuthenticatedAdminEnquiriesRoute: typeof AuthenticatedAdminEnquiriesRoute
+  AuthenticatedAdminGalleryRoute: typeof AuthenticatedAdminGalleryRoute
+  AuthenticatedAdminMenuRoute: typeof AuthenticatedAdminMenuRoute
+  AuthenticatedAdminOffersRoute: typeof AuthenticatedAdminOffersRoute
+  AuthenticatedAdminReviewsRoute: typeof AuthenticatedAdminReviewsRoute
+  AuthenticatedAdminRoomsRoute: typeof AuthenticatedAdminRoomsRoute
+  AuthenticatedAdminSettingsRoute: typeof AuthenticatedAdminSettingsRoute
+  AuthenticatedAdminStaffRoute: typeof AuthenticatedAdminStaffRoute
+  AuthenticatedAdminIndexRoute: typeof AuthenticatedAdminIndexRoute
+}
+
+const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
+  AuthenticatedAdminAuditRoute: AuthenticatedAdminAuditRoute,
+  AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRoute,
+  AuthenticatedAdminEnquiriesRoute: AuthenticatedAdminEnquiriesRoute,
+  AuthenticatedAdminGalleryRoute: AuthenticatedAdminGalleryRoute,
+  AuthenticatedAdminMenuRoute: AuthenticatedAdminMenuRoute,
+  AuthenticatedAdminOffersRoute: AuthenticatedAdminOffersRoute,
+  AuthenticatedAdminReviewsRoute: AuthenticatedAdminReviewsRoute,
+  AuthenticatedAdminRoomsRoute: AuthenticatedAdminRoomsRoute,
+  AuthenticatedAdminSettingsRoute: AuthenticatedAdminSettingsRoute,
+  AuthenticatedAdminStaffRoute: AuthenticatedAdminStaffRoute,
+  AuthenticatedAdminIndexRoute: AuthenticatedAdminIndexRoute,
+}
+
+const AuthenticatedAdminRouteWithChildren =
+  AuthenticatedAdminRoute._addFileChildren(AuthenticatedAdminRouteChildren)
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
   ContactRoute: ContactRoute,
   MenuRoute: MenuRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   RoomsRoute: RoomsRoute,
   ServicesRoute: ServicesRoute,
   VenueRoute: VenueRoute,
