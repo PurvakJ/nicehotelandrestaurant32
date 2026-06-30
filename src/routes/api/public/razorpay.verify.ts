@@ -14,7 +14,6 @@ const schema = z.object({
   guestEmail: z.string().email(),
   guestPhone: z.string().min(3).max(40),
   specialRequests: z.string().max(2000).optional(),
-  userId: z.string().uuid().optional(),
 });
 
 export const Route = createFileRoute("/api/public/razorpay/verify")({
@@ -42,17 +41,37 @@ export const Route = createFileRoute("/api/public/razorpay/verify")({
           return Response.json({ error: "Payment verification failed" }, { status: 400 });
         }
 
-        const { computeQuote } = await import("@/lib/booking.server");
+        const { computeQuote, assertAvailable, findExistingBooking } = await import("@/lib/booking.server");
         const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
+
+        // Idempotency: if this payment already produced a booking, return it.
+        try {
+          const existing = await findExistingBooking(d.razorpay_order_id, d.razorpay_payment_id);
+          if (existing) return Response.json({ ok: true, bookingId: existing });
+        } catch { /* non-fatal: continue to insert */ }
+
+        // Resolve the authenticated user from the bearer token (never trust client userId).
+        let userId: string | null = null;
+        const authHeader = request.headers.get("authorization");
+        const token = authHeader?.toLowerCase().startsWith("bearer ") ? authHeader.slice(7) : null;
+        if (token) {
+          try {
+            const { data: u } = await (supabaseAdmin as any).auth.getUser(token);
+            userId = u?.user?.id ?? null;
+          } catch { userId = null; }
+        }
 
         let quote;
         try { quote = await computeQuote(d.roomId, d.checkIn, d.checkOut); }
         catch (e: any) { return Response.json({ error: e?.message ?? "Quote failed" }, { status: 400 }); }
 
+        try { await assertAvailable(d.roomId, d.checkIn, d.checkOut); }
+        catch (e: any) { return Response.json({ error: e?.message ?? "Not available", paymentId: d.razorpay_payment_id }, { status: 409 }); }
+
         const { data: booking, error } = await (supabaseAdmin as any)
           .from("bookings")
           .insert({
-            user_id: d.userId ?? null,
+            user_id: userId,
             guest_name: d.guestName,
             guest_email: d.guestEmail,
             guest_phone: d.guestPhone,
