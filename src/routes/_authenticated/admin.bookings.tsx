@@ -28,12 +28,18 @@ const fields: Field[] = [
 const columns: Column[] = [
   { name: "guest_name", label: "Guest", render: (r) => <div><p className="font-medium">{r.guest_name}</p><p className="text-xs text-muted-foreground">{r.guest_phone || r.guest_email || "—"}</p></div> },
   { name: "room_type", label: "Rooms", render: (r) => <BookingRoomsCell bookingId={r.id} fallback={r.room_type} /> },
-  { name: "check_in", label: "Dates", render: (r) => <span className="text-xs">{r.check_in || "—"} → {r.check_out || "—"}</span> },
+  { name: "check_in", label: "Dates", render: (r) => <div className="text-xs"><div>{r.check_in || "—"} → {r.check_out || "—"}</div>{nightsBetween(r.check_in, r.check_out) > 0 && <div className="text-muted-foreground">{nightsBetween(r.check_in, r.check_out)} night{nightsBetween(r.check_in, r.check_out) > 1 ? "s" : ""}</div>}</div> },
   { name: "amount", label: "Amount", render: (r) => r.amount ? `₹${Number(r.amount).toLocaleString("en-IN")}` : "—" },
   { name: "payment_status", label: "Payment", render: (r) => <StatusBadge value={r.payment_status} /> },
   { name: "status", label: "Status", render: (r) => <StatusBadge value={r.status} /> },
   { name: "source", label: "Source", render: (r) => <span className="text-xs capitalize">{r.source}</span> },
 ];
+
+function nightsBetween(a?: string, b?: string) {
+  if (!a || !b) return 0;
+  const n = Math.round((new Date(b).getTime() - new Date(a).getTime()) / 86400000);
+  return n > 0 ? n : 0;
+}
 
 function Bookings() {
   const quick = async (id: string, status: string, reload: () => void) => {
