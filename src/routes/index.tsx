@@ -7,6 +7,7 @@ import {
 import { Reveal } from "@/components/site/Reveal";
 import { Icon } from "@/components/site/Icon";
 import { LuxeButton, SectionHeading, CtaBand } from "@/components/site/ui";
+import { TiltCard } from "@/components/site/TiltCard";
 import { useBooking } from "@/components/site/booking";
 
 export const Route = createFileRoute("/")({
@@ -55,7 +56,7 @@ function Home() {
       {/* HERO */}
       <section className="relative flex min-h-screen items-center justify-center overflow-hidden">
         <motion.img
-          src={site.images.dining} alt="Nice Hotel And Restaurant fine dining"
+          src={site.images.executive} alt="Nice Hotel And Restaurant — luxury executive room"
           className="absolute inset-0 h-full w-full object-cover"
           initial={{ scale: 1.15 }} animate={{ scale: 1 }} transition={{ duration: 6, ease: "easeOut" }}
           loading="eager"
@@ -155,6 +156,7 @@ function Home() {
           <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
             {rooms.map((r, i) => (
               <Reveal key={r.slug} delay={i * 0.12}>
+                <TiltCard className="group h-full">
                 <div className="group overflow-hidden rounded-2xl bg-ivory shadow-luxe">
                   <div className="relative h-64 overflow-hidden">
                     <img src={r.image} alt={r.name} className="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" />
@@ -172,6 +174,7 @@ function Home() {
                     </div>
                   </div>
                 </div>
+                </TiltCard>
               </Reveal>
             ))}
           </div>
@@ -198,7 +201,7 @@ function Home() {
             </div>
             <div className="mt-8 flex flex-wrap gap-4">
               <Link to="/venue"><LuxeButton><span>Explore Venues</span></LuxeButton></Link>
-              <button onClick={() => open()}><LuxeButton variant="outline"><span className="text-charcoal">Inquire Now</span></LuxeButton></button>
+              <LuxeButton variant="outline" onClick={() => open()}><span className="text-charcoal">Inquire Now</span></LuxeButton>
             </div>
           </Reveal>
         </div>
@@ -218,7 +221,7 @@ function Home() {
               Let us host your most cherished moments with impeccable service and elegant spaces.
             </p>
             <div className="mt-9 flex justify-center">
-              <button onClick={() => open()}><LuxeButton>Plan Your Event</LuxeButton></button>
+              <LuxeButton onClick={() => open()}>Plan Your Event</LuxeButton>
             </div>
           </Reveal>
         </div>
@@ -231,7 +234,8 @@ function Home() {
         <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-3">
           {curatedPrivileges.map((p, i) => (
             <Reveal key={p.title} delay={i * 0.1}>
-              <div className="group flex h-full flex-col overflow-hidden rounded-2xl bg-card shadow-card transition hover:-translate-y-2 hover:shadow-luxe">
+              <TiltCard className="group h-full">
+              <div className="group flex h-full flex-col overflow-hidden rounded-2xl bg-card shadow-card transition hover:shadow-luxe">
                 <div className="h-48 overflow-hidden">
                   <img src={p.image} alt={p.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-110" loading="lazy" />
                 </div>
@@ -244,6 +248,7 @@ function Home() {
                   </button>
                 </div>
               </div>
+              </TiltCard>
             </Reveal>
           ))}
         </div>

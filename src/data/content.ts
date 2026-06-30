@@ -1,4 +1,10 @@
-const IMG = "https://www.nicehotelandrestaurant.online/images";
+import executiveImg from "@/assets/hotel/executive.png.asset.json";
+import deluxeImg from "@/assets/hotel/deluxe.png.asset.json";
+import meetingImg from "@/assets/hotel/meeting.png.asset.json";
+import diningImg from "@/assets/hotel/dining.png.asset.json";
+import hallImg from "@/assets/hotel/hall.png.asset.json";
+import dining2Img from "@/assets/hotel/dining2.png.asset.json";
+import meeting1Img from "@/assets/hotel/meeting1.png.asset.json";
 
 export const site = {
   name: "Nice Hotel And Restaurant",
@@ -15,11 +21,13 @@ export const site = {
   instagram: "https://www.instagram.com/nice_hotel_and_resturant/?hl=en",
   whatsapp: "https://wa.me/919216400005",
   images: {
-    executive: `${IMG}/executive.png`,
-    deluxe: `${IMG}/Delux%20room.png`,
-    meeting: `${IMG}/meeting%202.png`,
-    dining: `${IMG}/dining%201.png`,
-    hall: `${IMG}/kitty%20hall.png`,
+    executive: executiveImg.url,
+    deluxe: deluxeImg.url,
+    meeting: meetingImg.url,
+    dining: diningImg.url,
+    hall: hallImg.url,
+    dining2: dining2Img.url,
+    meeting1: meeting1Img.url,
   },
 };
 
@@ -122,7 +130,7 @@ export const venues = [
     capacity: "Coming Soon",
     size: "—",
     floor: "Ground Floor",
-    image: `https://images.unsplash.com/photo-1530023367847-a683933f4172?auto=format&fit=crop&w=1200&q=80`,
+    image: dining2Img.url,
     comingSoon: true,
     description: "Beautiful outdoor venue with scenic views — Opening Soon!",
     amenities: ["Outdoor Setting", "Scenic Views", "Garden Lighting", "Open Air", "Floral Decor", "Catering"],

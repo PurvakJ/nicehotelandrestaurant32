@@ -5,6 +5,7 @@ import { Reveal } from "@/components/site/Reveal";
 import { Icon } from "@/components/site/Icon";
 import { PageHeader, SectionHeading, CtaBand } from "@/components/site/ui";
 import { useBooking } from "@/components/site/booking";
+import { TiltCard } from "@/components/site/TiltCard";
 
 export const Route = createFileRoute("/rooms")({
   head: () => ({
@@ -67,11 +68,13 @@ function Rooms() {
           <div className="mt-14 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
             {whyChooseRooms.map((w, i) => (
               <Reveal key={w.title} delay={i * 0.08}>
+                <TiltCard className="h-full">
                 <div className="h-full rounded-2xl bg-card p-7 text-center shadow-card">
                   <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-beige text-gold"><Icon name={w.icon} className="h-6 w-6" /></div>
                   <h3 className="mt-4 font-display text-xl text-charcoal">{w.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground">{w.text}</p>
                 </div>
+                </TiltCard>
               </Reveal>
             ))}
           </div>
