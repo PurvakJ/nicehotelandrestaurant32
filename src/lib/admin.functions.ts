@@ -184,7 +184,7 @@ export const adminBookingRooms = createServerFn({ method: "POST" })
       .eq("booking_id", data.bookingId)
       .order("created_at", { ascending: true });
     if (error) throw new Error(error.message);
-    return (rows ?? []) as Record<string, unknown>[];
+    return (rows ?? []) as unknown as { id: string }[];
   });
 
 export const adminBookingRoomUpdate = createServerFn({ method: "POST" })
