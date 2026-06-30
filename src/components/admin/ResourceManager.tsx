@@ -21,11 +21,13 @@ import type { ReactNode } from "react";
 
 export type FieldType = "text" | "textarea" | "number" | "boolean" | "select" | "tags" | "date" | "datetime";
 
+export type SelectOption = string | { value: string; label: string };
+
 export interface Field {
   name: string;
   label: string;
   type: FieldType;
-  options?: string[];
+  options?: SelectOption[];
   placeholder?: string;
   required?: boolean;
   default?: unknown;
@@ -188,7 +190,11 @@ export function ResourceManager({ table, columns, fields, orderBy = "created_at"
                 ) : f.type === "select" ? (
                   <Select value={String(form[f.name] ?? "")} onValueChange={(v) => setForm({ ...form, [f.name]: v })}>
                     <SelectTrigger><SelectValue placeholder="Select" /></SelectTrigger>
-                    <SelectContent>{(f.options ?? []).map((o) => <SelectItem key={o} value={o}>{o}</SelectItem>)}</SelectContent>
+                    <SelectContent>{(f.options ?? []).map((o) => {
+                      const val = typeof o === "string" ? o : o.value;
+                      const lbl = typeof o === "string" ? o : o.label;
+                      return <SelectItem key={val || "_"} value={val || "_none"}>{lbl || "—"}</SelectItem>;
+                    })}</SelectContent>
                   </Select>
                 ) : f.type === "tags" ? (
                   <Input value={Array.isArray(form[f.name]) ? (form[f.name] as string[]).join(", ") : String(form[f.name] ?? "")} placeholder="Comma separated" onChange={(e) => setForm({ ...form, [f.name]: e.target.value })} />
