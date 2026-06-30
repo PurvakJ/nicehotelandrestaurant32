@@ -6,6 +6,7 @@ import hallImg from "@/assets/hotel/hall.png";
 import dining2Img from "@/assets/hotel/dining2.png";
 import meeting1Img from "@/assets/hotel/meeting1.png";
 import meetingRoomImg from "@/assets/hotel/meeting-room.jpg";
+import gardenTerraceImg from "@/assets/hotel/garden-terrace.jpg";
 
 export const site = {
   name: "Nice Hotel And Restaurant",
@@ -30,6 +31,7 @@ export const site = {
     dining2: dining2Img,
     meeting1: meeting1Img,
     meetingRoom: meetingRoomImg,
+    gardenTerrace: gardenTerraceImg,
   },
 };
 
