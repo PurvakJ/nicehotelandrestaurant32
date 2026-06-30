@@ -145,3 +145,14 @@
   max-width: 80rem;
   padding-inline: 1.5rem;
 }
+
+/* Hide the "Made with Lovable" badge without affecting layout */
+#lovable-badge,
+a[href*="lovable.dev"][target="_blank"],
+[id*="lovable-badge"],
+[class*="lovable-badge"] {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
