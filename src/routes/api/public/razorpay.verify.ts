@@ -21,8 +21,10 @@ export const Route = createFileRoute("/api/public/razorpay/verify")({
   server: {
     handlers: {
       POST: async ({ request }) => {
-        const keySecret = process.env.RAZORPAY_KEY_SECRET;
-        if (!keySecret) return Response.json({ error: "Payment gateway not configured" }, { status: 500 });
+        const { razorpayCreds } = await import("@/lib/razorpay.server");
+        const creds = razorpayCreds();
+        if (!creds) return Response.json({ error: "Payment gateway not configured" }, { status: 500 });
+        const keySecret = creds.keySecret;
 
         let body: unknown;
         try { body = await request.json(); } catch { return Response.json({ error: "Invalid body" }, { status: 400 }); }
