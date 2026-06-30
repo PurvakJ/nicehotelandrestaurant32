@@ -10,8 +10,16 @@ import { LuxeButton, SectionHeading, CtaBand } from "@/components/site/ui";
 import { TiltCard } from "@/components/site/TiltCard";
 import { useBooking } from "@/components/site/booking";
 import { breadcrumbLd } from "@/lib/seo";
+import { getRooms } from "@/lib/public.functions";
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    try {
+      return { dbRooms: await getRooms() };
+    } catch {
+      return { dbRooms: [] as Awaited<ReturnType<typeof getRooms>> };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Nice Hotel And Restaurant — Luxury Hotel & Fine Dining in Mansa, Punjab" },
