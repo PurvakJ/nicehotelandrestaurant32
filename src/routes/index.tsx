@@ -10,8 +10,16 @@ import { LuxeButton, SectionHeading, CtaBand } from "@/components/site/ui";
 import { TiltCard } from "@/components/site/TiltCard";
 import { useBooking } from "@/components/site/booking";
 import { breadcrumbLd } from "@/lib/seo";
+import { getRooms } from "@/lib/public.functions";
 
 export const Route = createFileRoute("/")({
+  loader: async () => {
+    try {
+      return { dbRooms: await getRooms() };
+    } catch {
+      return { dbRooms: [] as Awaited<ReturnType<typeof getRooms>> };
+    }
+  },
   head: () => ({
     meta: [
       { title: "Nice Hotel And Restaurant — Luxury Hotel & Fine Dining in Mansa, Punjab" },
@@ -56,6 +64,29 @@ function BookingWidget() {
 
 function Home() {
   const { open } = useBooking();
+  const { dbRooms } = Route.useLoaderData();
+  const seen = new Set<string>();
+  const teaser = (dbRooms as any[])
+    .filter((r) => {
+      const k = `${(r.name ?? "").toLowerCase()}|${(r.category ?? "").toLowerCase()}`;
+      if (seen.has(k)) return false;
+      seen.add(k);
+      return true;
+    })
+    .slice(0, 2)
+    .map((r) => {
+      const fb = rooms.find((s) => s.category?.toLowerCase() === (r.category ?? "").toLowerCase()) ?? rooms[0];
+      return {
+        slug: r.id as string,
+        name: (r.name as string) ?? fb.name,
+        badge: r.category ? `${r.category} Suite` : fb.badge,
+        rating: fb.rating,
+        price: Number(r.price) || fb.price,
+        image: (Array.isArray(r.images) && r.images[0]) || fb.image,
+        description: (r.description as string) || fb.description,
+      };
+    });
+  const roomTeaser = teaser.length ? teaser : rooms;
   return (
     <>
       {/* HERO */}
@@ -159,7 +190,7 @@ function Home() {
           <SectionHeading center eyebrow="Stay" title="Rooms & Suites"
             sub="Choose from our executive and deluxe accommodations" />
           <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
-            {rooms.map((r, i) => (
+            {roomTeaser.map((r, i) => (
               <Reveal key={r.slug} delay={i * 0.12}>
                 <TiltCard className="group h-full">
                 <div className="group overflow-hidden rounded-2xl bg-ivory shadow-luxe">
@@ -175,7 +206,7 @@ function Home() {
                     <p className="mt-2 text-sm text-muted-foreground">{r.description}</p>
                     <div className="mt-5 flex items-end justify-between">
                       <p className="font-display text-2xl text-gold">₹{r.price}<span className="text-sm text-muted-foreground">/night</span></p>
-                      <button onClick={() => open(r.name)} className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal link-underline">Book This Room</button>
+                      <button onClick={() => open(r.name)} aria-label={`Book ${r.name}`} className="text-xs font-medium uppercase tracking-[0.2em] text-charcoal link-underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold">Book This Room</button>
                     </div>
                   </div>
                 </div>
