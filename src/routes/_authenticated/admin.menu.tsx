@@ -31,7 +31,7 @@ function Menu() {
     { name: "price", label: "Price (₹)", type: "number" },
     { name: "veg", label: "Vegetarian", type: "boolean", default: true },
     { name: "is_available", label: "Available", type: "boolean", default: true },
-    { name: "badge", label: "Badge", type: "select", options: ["", "Chef Special", "Popular", "New", "Spicy", "Best Seller"] },
+    { name: "badge", label: "Badge", type: "select", options: ["None", "Chef Special", "Popular", "New", "Spicy", "Best Seller"] },
     { name: "sort_order", label: "Sort Order", type: "number", default: 0 },
     { name: "image_url", label: "Image URL", type: "text", fullWidth: true },
     { name: "description", label: "Description", type: "textarea" },
