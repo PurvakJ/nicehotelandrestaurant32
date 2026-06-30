@@ -24,6 +24,7 @@ import { Route as AuthenticatedAdminIndexRouteImport } from './routes/_authentic
 import { Route as AuthenticatedAdminRoomsRouteImport } from './routes/_authenticated/admin.rooms'
 import { Route as AuthenticatedAdminOffersRouteImport } from './routes/_authenticated/admin.offers'
 import { Route as AuthenticatedAdminMenuRouteImport } from './routes/_authenticated/admin.menu'
+import { Route as AuthenticatedAdminEnquiriesRouteImport } from './routes/_authenticated/admin.enquiries'
 import { Route as AuthenticatedAdminBookingsRouteImport } from './routes/_authenticated/admin.bookings'
 
 const VenueRoute = VenueRouteImport.update({
@@ -101,6 +102,12 @@ const AuthenticatedAdminMenuRoute = AuthenticatedAdminMenuRouteImport.update({
   path: '/menu',
   getParentRoute: () => AuthenticatedAdminRoute,
 } as any)
+const AuthenticatedAdminEnquiriesRoute =
+  AuthenticatedAdminEnquiriesRouteImport.update({
+    id: '/enquiries',
+    path: '/enquiries',
+    getParentRoute: () => AuthenticatedAdminRoute,
+  } as any)
 const AuthenticatedAdminBookingsRoute =
   AuthenticatedAdminBookingsRouteImport.update({
     id: '/bookings',
@@ -120,6 +127,7 @@ export interface FileRoutesByFullPath {
   '/venue': typeof VenueRoute
   '/admin': typeof AuthenticatedAdminRouteWithChildren
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
+  '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/admin/menu': typeof AuthenticatedAdminMenuRoute
   '/admin/offers': typeof AuthenticatedAdminOffersRoute
   '/admin/rooms': typeof AuthenticatedAdminRoomsRoute
@@ -136,6 +144,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/venue': typeof VenueRoute
   '/admin/bookings': typeof AuthenticatedAdminBookingsRoute
+  '/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/admin/menu': typeof AuthenticatedAdminMenuRoute
   '/admin/offers': typeof AuthenticatedAdminOffersRoute
   '/admin/rooms': typeof AuthenticatedAdminRoomsRoute
@@ -155,6 +164,7 @@ export interface FileRoutesById {
   '/venue': typeof VenueRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRouteWithChildren
   '/_authenticated/admin/bookings': typeof AuthenticatedAdminBookingsRoute
+  '/_authenticated/admin/enquiries': typeof AuthenticatedAdminEnquiriesRoute
   '/_authenticated/admin/menu': typeof AuthenticatedAdminMenuRoute
   '/_authenticated/admin/offers': typeof AuthenticatedAdminOffersRoute
   '/_authenticated/admin/rooms': typeof AuthenticatedAdminRoomsRoute
@@ -174,6 +184,7 @@ export interface FileRouteTypes {
     | '/venue'
     | '/admin'
     | '/admin/bookings'
+    | '/admin/enquiries'
     | '/admin/menu'
     | '/admin/offers'
     | '/admin/rooms'
@@ -190,6 +201,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/venue'
     | '/admin/bookings'
+    | '/admin/enquiries'
     | '/admin/menu'
     | '/admin/offers'
     | '/admin/rooms'
@@ -208,6 +220,7 @@ export interface FileRouteTypes {
     | '/venue'
     | '/_authenticated/admin'
     | '/_authenticated/admin/bookings'
+    | '/_authenticated/admin/enquiries'
     | '/_authenticated/admin/menu'
     | '/_authenticated/admin/offers'
     | '/_authenticated/admin/rooms'
@@ -334,6 +347,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAdminMenuRouteImport
       parentRoute: typeof AuthenticatedAdminRoute
     }
+    '/_authenticated/admin/enquiries': {
+      id: '/_authenticated/admin/enquiries'
+      path: '/enquiries'
+      fullPath: '/admin/enquiries'
+      preLoaderRoute: typeof AuthenticatedAdminEnquiriesRouteImport
+      parentRoute: typeof AuthenticatedAdminRoute
+    }
     '/_authenticated/admin/bookings': {
       id: '/_authenticated/admin/bookings'
       path: '/bookings'
@@ -346,6 +366,7 @@ declare module '@tanstack/react-router' {
 
 interface AuthenticatedAdminRouteChildren {
   AuthenticatedAdminBookingsRoute: typeof AuthenticatedAdminBookingsRoute
+  AuthenticatedAdminEnquiriesRoute: typeof AuthenticatedAdminEnquiriesRoute
   AuthenticatedAdminMenuRoute: typeof AuthenticatedAdminMenuRoute
   AuthenticatedAdminOffersRoute: typeof AuthenticatedAdminOffersRoute
   AuthenticatedAdminRoomsRoute: typeof AuthenticatedAdminRoomsRoute
@@ -354,6 +375,7 @@ interface AuthenticatedAdminRouteChildren {
 
 const AuthenticatedAdminRouteChildren: AuthenticatedAdminRouteChildren = {
   AuthenticatedAdminBookingsRoute: AuthenticatedAdminBookingsRoute,
+  AuthenticatedAdminEnquiriesRoute: AuthenticatedAdminEnquiriesRoute,
   AuthenticatedAdminMenuRoute: AuthenticatedAdminMenuRoute,
   AuthenticatedAdminOffersRoute: AuthenticatedAdminOffersRoute,
   AuthenticatedAdminRoomsRoute: AuthenticatedAdminRoomsRoute,
