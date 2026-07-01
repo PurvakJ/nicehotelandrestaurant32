@@ -385,7 +385,7 @@ function BookPage() {
                           </label>
                           <label className="text-xs text-muted-foreground">
                             <span className="mb-1.5 block">Number of rooms</span>
-                            <input type="number" min={1} max={a?.available ?? 10} value={l.quantity} onChange={(e) => updateLine(l.key, { quantity: Math.max(1, Number(e.target.value)) })} className={fieldCls} />
+                            <input type="number" min={0} max={a?.available ?? 10} value={l.quantity} placeholder="0" onChange={(e) => updateLine(l.key, { quantity: Math.max(0, Math.min(a?.available ?? 99, Number(e.target.value))) })} className={fieldCls} />
                           </label>
                           <label className="text-xs text-muted-foreground">
                             <span className="mb-1.5 block">Adults</span>
